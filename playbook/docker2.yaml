@@ -12,4 +12,18 @@
   - name: Remove Local Image
     command: docker image rm hys0254/mywebapp tomcat:9-jdk11
 
+- name: Run Docker Container
+  hosts: docker_host
+  gather_facts: false
 
+  tasks:
+  - name: Stop Existed Container
+    command: docker stop tomcat-mywebapp
+    ignore_errors: true
+
+  - name: Remove Existed Container
+    command: docker rm tomcat-mywebapp
+    ignore_errors: true
+
+  - name: Run Container
+    command: docker run -d --name tomcat-mywebapp -p 8080:8080 hys0254/mywebapp
